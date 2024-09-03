@@ -1,20 +1,19 @@
-const { createLogger, format, transports } = require("winston");
-const { combine, label, printf, timestamp } = format;
+const { createLogger, format, transports } = require('winston');
+const { combine, timestamp, label, printf } = format;
 
-const customFormat = printf(({ level, message, label, timestamp }) => {
-  return `${timestamp} : [${label}] : ${level} : ${message}`;
+const customFormat = printf(( { level, message, timestamp, error } ) => {
+    return `${timestamp} : ${level}: ${message}`;
 });
 
 const logger = createLogger({
-  format: combine(
-    timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-    label({ label: "right meow!" }),
-    customFormat
-  ),
-  transports: [
-    new transports.Console(),
-    new transports.File({ filename: "combined.log" }),
-  ],
+    format: combine(
+        timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
+        customFormat,
+    ),
+    transports: [
+        new transports.Console(),
+        new transports.File({filename: 'combined.log'})
+    ],
 });
 
 module.exports = logger;
