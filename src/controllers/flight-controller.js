@@ -43,7 +43,7 @@ async function getAllFlights(req, res) {
     const flights = await FlightService.getAllFlights(req.query);
     SuccessResponse.data = flights;
     SuccessResponse.message = "Successfully created an flight";
-    return res.status(StatusCodes.CREATED).json(SuccessResponse);
+    return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
     return res.status(error.statusCode).json(ErrorResponse);
